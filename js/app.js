@@ -28,6 +28,7 @@ Enemy.prototype.render = function() {
     this.x = this.x % 505;
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+//判断是否碰撞
 Enemy.prototype.checkCollisions = function(player) {
     if (((this.x % 505) >= (player.x - 30)) && (this.y >= (player.y - 40)) && ((this.x % 505) <= (player.x + 30)) && (this.y <= (player.y + 40))) {
         player.y = 405;
@@ -41,7 +42,7 @@ var Player = function(x, y) {
     this.x = x;
     this.y = y;
 };
-
+//判断是否成功
 var cs = true;
 Player.prototype.update = function(canvas, isFirst) {
     var _this = this;
@@ -56,7 +57,7 @@ Player.prototype.update = function(canvas, isFirst) {
         }, 2500);
     }
 };
-
+//键盘操作
 Player.prototype.handleInput = function(movement) {
     switch (movement) {
         case 'left':
@@ -89,6 +90,7 @@ Player.prototype.handleInput = function(movement) {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+//成功动画展示
 var win = function(canvas, isFirst) {
     if (isFirst) {
         ctx.font = '36px Impact';
