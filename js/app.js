@@ -1,25 +1,25 @@
 // 这是我们的玩家要躲避的敌人 
-var Enemy = function(x, y, speed) {
+var Enemy = function(arr) {
     // 要应用到每个敌人的实例的变量写在这里
     // 我们已经提供了一个来帮助你实现更多
 
     // 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
     this.sprite = 'images/enemy-bug.png';
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
+    this.x = 0;
+    this.y = arr[Math.floor(Math.random() * arr.length)];
+    this.speed = Math.random() * 100 + 200;
+
 
 };
 
 // 此为游戏必须的函数，用来更新敌人的位置
 // 参数: dt ，表示时间间隙
-Enemy.prototype.update = function(dt) {
+Enemy.prototype.update = function(dt, enemy) {
     // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
     // 都是以同样的速度运行的
     this.x += this.speed * dt;
     if (this.x > 505) {
-        this.y = Enemy_y[Math.floor(Math.random() * Enemy_y.length)];
-        this.speed = Math.random() * 100 + 200;
+        enemy.randomEnemy(Enemy_y);
     }
 };
 
@@ -30,10 +30,15 @@ Enemy.prototype.render = function() {
 };
 //判断是否碰撞
 Enemy.prototype.checkCollisions = function(player) {
-    if (((this.x % 505) >= (player.x - 30)) && ((this.x % 505) <= (player.x + 30)) && (this.y >= (player.y - 40)) && (this.y <= (player.y + 40))) {
+    if (((this.x % 505) >= (player.x - 20)) && ((this.x % 505) <= (player.x + 20)) && (this.y >= (player.y - 10)) && (this.y <= (player.y + 10))) {
         player.y = 405;
         player.x = 202;
     }
+};
+Enemy.prototype.randomEnemy = function(arr) {
+    this.x = 0;
+    this.y = arr[Math.floor(Math.random() * arr.length)];
+    this.speed = Math.random() * 100 + 200;
 };
 // 现在实现你自己的玩家类
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
@@ -108,11 +113,7 @@ var win = function(canvas, isFirst) {
 var allEnemies = [];
 var Enemy_y = [63, 146, 229, 312];
 for (var i = 0; i < 4; i++) {
-
-    var y = Math.floor(Math.random() * Enemy_y.length);
-    var _y = Enemy_y[y];
-    var speed = Math.random() * 100 + 200;
-    allEnemies[i] = new Enemy(0, _y, speed);
+    allEnemies[i] = new Enemy(Enemy_y);
 }
 var player = new Player(300, 405);
 
