@@ -30,7 +30,7 @@ Enemy.prototype.render = function() {
 };
 //判断是否碰撞
 Enemy.prototype.checkCollisions = function(player) {
-    if (((this.x % 505) >= (player.x - 30)) && (this.y >= (player.y - 40)) && ((this.x % 505) <= (player.x + 30)) && (this.y <= (player.y + 40))) {
+    if (((this.x % 505) >= (player.x - 30)) && ((this.x % 505) <= (player.x + 30)) && (this.y >= (player.y - 40)) && (this.y <= (player.y + 40))) {
         player.y = 405;
         player.x = 202;
     }
@@ -42,7 +42,7 @@ var Player = function(x, y) {
     this.x = x;
     this.y = y;
 };
-//判断是否成功
+//更新并判断是否成功
 var cs = true;
 Player.prototype.update = function(canvas, isFirst) {
     var _this = this;
@@ -52,7 +52,7 @@ Player.prototype.update = function(canvas, isFirst) {
         setTimeout(function() {
             _this.y = 405;
             _this.x = 202;
-            ctx.clearRect(0, 0, 505, 50);
+            ctx.clearRect(0, 0, canvas.width, 50);
             cs = true;
         }, 2500);
     }
