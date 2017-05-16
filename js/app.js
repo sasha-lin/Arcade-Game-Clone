@@ -14,12 +14,12 @@ var Enemy = function(arr) {
 
 // 此为游戏必须的函数，用来更新敌人的位置
 // 参数: dt ，表示时间间隙
-Enemy.prototype.update = function(dt, enemy) {
+Enemy.prototype.update = function(dt, ) {
     // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
     // 都是以同样的速度运行的
     this.x += this.speed * dt;
     if (this.x > 505) {
-        enemy.randomEnemy(Enemy_y);
+        this.randomEnemy(Enemy_y);
     }
 };
 
@@ -30,7 +30,7 @@ Enemy.prototype.render = function() {
 };
 //判断是否碰撞
 Enemy.prototype.checkCollisions = function(player) {
-    if (((this.x % 505) >= (player.x - 20)) && ((this.x % 505) <= (player.x + 20)) && (this.y >= (player.y - 10)) && (this.y <= (player.y + 10))) {
+    if (((this.x % 505) >= (player.x - 50)) && ((this.x % 505) <= (player.x + 30)) && (this.y >= (player.y - 10)) && (this.y <= (player.y + 10))) {
         player.y = 405;
         player.x = 202;
     }
@@ -53,7 +53,7 @@ Player.prototype.update = function(canvas, isFirst) {
     var _this = this;
     isFirst = true;
     if ((_this.y - 63) < 0) {
-        cs = win(canvas, cs);
+        cs = this.win(canvas, cs);
         setTimeout(function() {
             _this.y = 405;
             _this.x = 202;
@@ -96,20 +96,20 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 //成功动画展示
-var win = function(canvas, isFirst) {
-    if (isFirst) {
-        ctx.font = '36px Impact';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = 'black';
-        ctx.fillText('w i n', canvas.width / 2, 36);
-        isFirst = false;
+Player.prototype.win = function(canvas, isFirst) {
+        if (isFirst) {
+            ctx.font = '36px Impact';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = 'black';
+            ctx.fillText('w i n', canvas.width / 2, 36);
+            isFirst = false;
+        }
+        return isFirst;
     }
-    return isFirst;
-};
-// 现在实例化你的所有对象
-// 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
-// 把玩家对象放进一个叫 player 的变量里面
-// var allEnemies = [new Enemy(0, 312, 100)];
+    // 现在实例化你的所有对象
+    // 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
+    // 把玩家对象放进一个叫 player 的变量里面
+    // var allEnemies = [new Enemy(0, 312, 100)];
 var allEnemies = [];
 var Enemy_y = [63, 146, 229, 312];
 for (var i = 0; i < 4; i++) {
